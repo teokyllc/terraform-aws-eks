@@ -14,5 +14,5 @@ data "aws_subnets" "eks_subnets" {
 }
 
 data "tls_certificate" "eks_issuer_cert" {
- url = aws_eks_cluster.eks.identity.0.oidc.0.issuer
+  url = aws_eks_cluster.eks.identity.0.oidc.0.issuer
 }
