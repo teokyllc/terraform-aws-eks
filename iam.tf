@@ -4,7 +4,7 @@ resource "aws_iam_role" "eks_cluster_role" {
     Name             = "${var.cluster_name}-eks"
   })
   assume_role_policy = jsonencode({
-    Version = "2012-10-17"
+    Version   = "2012-10-17"
     Statement = [
       {
         Action = "sts:AssumeRole"
@@ -18,24 +18,16 @@ resource "aws_iam_role" "eks_cluster_role" {
   })
 
   inline_policy {
-    name = "mrionline-global-${var.tags.ClusterSuffix}-cluster"
+    name   = var.cluster_name
     policy = jsonencode({
-      Version = "2012-10-17"
+      Version   = "2012-10-17"
       Statement = [
         {
           Action   = [
             "logs:CreateLogGroup"
             ]
           Effect   = "Deny"
-          Resource = "arn:aws:logs:us-east-2:621672204142:log-group:/aws/eks/mrionline-global-${var.tags.ClusterSuffix}/cluster"
-        },
-        {
-          Action   = [
-            "ssm:Get*",
-            "ssm:Describe*"
-            ]
-          Effect   = "Allow"
-          Resource = "arn:aws:ssm:us-east-2:621672204142:parameter/wp-oauth-client_id-prod"
+          Resource = "arn:aws:logs:us-east-2:621672204142:log-group:/aws/eks/${var.cluster_name}/cluster"
         }
       ]
     })
