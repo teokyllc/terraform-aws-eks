@@ -84,6 +84,11 @@ variable "eks_node_groups" {
   default     = null
 }
 
+variable "admin_user_map" {
+  type        = map
+  description = "A list of IAM users allowed access to Kubernetes."
+  default     = null
+}
 
 ###############################
 ###   Data vars             ###
