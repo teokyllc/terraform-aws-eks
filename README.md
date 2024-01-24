@@ -11,7 +11,7 @@ You can use versioned release tags to ensure that your project using this module
 <b>Repo latest commit</b><br>
 ```
 module "eks" {
-  source = "github.com/Medality-Health/terraform-aws-eks"
+  source = "github.com/teokyllc/terraform-aws-eks"
   ...
 ```
 <br>
@@ -20,7 +20,7 @@ module "eks" {
 
 ```
 module "eks" {
-  source = "github.com/Medality-Health/terraform-aws-eks?ref=1.0.0"
+  source = "github.com/teokyllc/terraform-aws-eks?ref=1.0.0"
   ...
 ```
 <br>
@@ -30,7 +30,7 @@ This is an example of using this module something, fill in the rest.<br>
 
 ```
 module "eks" {
-  source                                      = "github.com/Medality-Health/terraform-aws-eks?ref=1.0.0"
+  source                                      = "github.com/teokyllc/terraform-aws-eks?ref=1.0.0"
   vpc_id                                      = "vpc-0d2a61a549c358af4"
   control_plane_subnet_tier                   = "public"
   node_group_subnet_tier                      = "public"
@@ -57,7 +57,7 @@ module "eks" {
 <br><br>
 Module can be tested locally:<br>
 ```
-git clone https://github.com/Medality-Health/terraform-aws-eks.git
+git clone https://github.com/teokyllc/terraform-aws-eks.git
 cd terraform-aws-eks
 
 cat <<EOF > eks.auto.tfvars
