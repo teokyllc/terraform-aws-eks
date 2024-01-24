@@ -9,7 +9,7 @@ data "aws_subnets" "eks_subnets" {
   }
 
   tags = {
-    Tier = var.eks_subnet_tier
+    tier = var.eks_subnet_tier
   }
 }
 
