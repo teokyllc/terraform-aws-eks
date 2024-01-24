@@ -67,92 +67,36 @@ resource "aws_iam_role" "eks_node_group_roles" {
 }
 
 resource "aws_iam_role_policy_attachment" "eks_worker_node_policy_attachment" {
+  depends_on = [ aws_iam_role.eks_node_group_roles ]
   for_each   = var.eks_node_groups
   role       = each.value["role_name"]
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
 }
 
 resource "aws_iam_role_policy_attachment" "eks_container_registry_read_only_policy_attachment" {
+  depends_on = [ aws_iam_role.eks_node_group_roles ]
   for_each   = var.eks_node_groups
   role       = each.value["role_name"]
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
 
 resource "aws_iam_role_policy_attachment" "ssm_managed_instance_core_policy_attachment" {
+  depends_on = [ aws_iam_role.eks_node_group_roles ]
   for_each   = var.eks_node_groups
   role       = each.value["role_name"]
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
 resource "aws_iam_role_policy_attachment" "eks_cni_policy_attachment" {
+  depends_on = [ aws_iam_role.eks_node_group_roles ]
   for_each   = var.eks_node_groups
   role       = each.value["role_name"]
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
 }
 
 resource "aws_iam_role_policy_attachment" "eks_ebs_csi_driver_policy_attachment" {
+  depends_on = [ aws_iam_role.eks_node_group_roles ]
   for_each   = var.eks_node_groups
   role       = each.value["role_name"]
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
 }
-
-# resource "aws_iam_role" "eks_cluster_autoscaler_role" {
-#   count              = var.enable_eks_cluster_autoscaling ? 1 : 0
-#   name               = "${var.cluster_name}-AmazonEKSClusterAutoscalerRole"
-#   tags               = merge(var.tags, {
-#     Name             = "${var.cluster_name}-AmazonEKSClusterAutoscalerRole"
-#   })
-#   assume_role_policy = jsonencode({
-#     "Version": "2012-10-17",
-#     "Statement": [
-#         {
-#             "Effect": "Allow",
-#             "Action": "sts:AssumeRoleWithWebIdentity",
-#             "Principal": {
-#                 "Federated": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/oidc.eks.${data.aws_region.current.name}.amazonaws.com/id/${split("/", aws_eks_cluster.eks[0].identity[0].oidc[0].issuer)[4]}"
-#             },
-#             "Condition": {
-#                 "StringEquals": {
-#                     "oidc.eks.${data.aws_region.current.name}.amazonaws.com/id/${split("/", aws_eks_cluster.eks[0].identity[0].oidc[0].issuer)[4]}:sub": "system:serviceaccount:kube-system:cluster-autoscaler"
-#                 }
-#             }
-#         }
-#     ]
-# })
-
-#   inline_policy {
-#     name = "AmazonEKSClusterAutoscalerPolicy"
-#     policy = jsonencode({
-#     "Version": "2012-10-17",
-#     "Statement": [
-#         {
-#             "Sid": "VisualEditor0",
-#             "Effect": "Allow",
-#             "Action": [
-#                 "autoscaling:SetDesiredCapacity",
-#                 "autoscaling:TerminateInstanceInAutoScalingGroup"
-#             ],
-#             "Resource": "*",
-#             "Condition": {
-#                 "StringEquals": {
-#                     "aws:ResourceTag/k8s.io/cluster-autoscaler/${var.cluster_name}": "owned"
-#                 }
-#             }
-#         },
-#         {
-#             "Sid": "VisualEditor1",
-#             "Effect": "Allow",
-#             "Action": [
-#                 "autoscaling:DescribeAutoScalingInstances",
-#                 "autoscaling:DescribeAutoScalingGroups",
-#                 "ec2:DescribeLaunchTemplateVersions",
-#                 "autoscaling:DescribeTags",
-#                 "autoscaling:DescribeLaunchConfigurations",
-#                 "ec2:DescribeInstanceTypes"
-#             ],
-#             "Resource": "*"
-#         }
-#     ]
-# })
-#   }
-# }
