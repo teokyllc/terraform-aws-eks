@@ -15,7 +15,7 @@ output "eks_arn" {
 }
 
 output "eks_cluster_id" {
-  value = ws_eks_cluster.eks.cluster_id
+  value = aws_eks_cluster.eks.cluster_id
 }
 
 output "eks_cluster_endpoint" {
