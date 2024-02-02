@@ -6,12 +6,6 @@ variable "tags" {
 ###############################
 ###   EKS vars              ###
 ###############################
-variable "create_eks_cluster" {
-    type        = bool
-    description = "Creates an EKS cluster with a node pool."
-    default     = false
-}
-
 variable "eks_cluster_role_name" {
     type        = string
     description = "IAM role name that provides permissions for the Kubernetes control plane to make calls to AWS API operations on your behalf."

@@ -7,35 +7,35 @@ output "eks_control_plane_log_group_name" {
 }
 
 output "eks_id" {
-  value = var.create_eks_cluster ? aws_eks_cluster.eks.id : null
+  value = aws_eks_cluster.eks.id
 }
 
 output "eks_arn" {
-  value = var.create_eks_cluster ? aws_eks_cluster.eks.arn : null
+  value = aws_eks_cluster.eks.arn
 }
 
 output "eks_cluster_id" {
-  value = var.create_eks_cluster ? aws_eks_cluster.eks.cluster_id : null
+  value = ws_eks_cluster.eks.cluster_id
 }
 
 output "eks_cluster_endpoint" {
-  value = var.create_eks_cluster ? aws_eks_cluster.eks.endpoint : null
+  value = aws_eks_cluster.eks.endpoint
 }
 
 output "eks_platform_version" {
-  value = var.create_eks_cluster ? aws_eks_cluster.eks.platform_version : null
+  value = aws_eks_cluster.eks.platform_version
 }
 
 output "eks_certificate_authority" {
-  value = var.create_eks_cluster ? aws_eks_cluster.eks.certificate_authority[0].data : null
+  value = aws_eks_cluster.eks.certificate_authority[0].data
 }
 
 output "eks_oidc_issuer" {
-  value = var.create_eks_cluster ? aws_eks_cluster.eks.identity[0].oidc[0].issuer : null
+  value = aws_eks_cluster.eks.identity[0].oidc[0].issuer
 }
 
 output "eks_oidc_hash" {
-  value = var.create_eks_cluster ? split("/", aws_eks_cluster.eks.identity[0].oidc[0].issuer)[4] : null
+  value = split("/", aws_eks_cluster.eks.identity[0].oidc[0].issuer)[4]
 }
 
 output "eks_cluster_security_group_id" {
